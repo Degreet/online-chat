@@ -6,11 +6,15 @@ const Cookies = require('cookies')
 const dotenv = require('dotenv')
 dotenv.config()
 
+console.log("modules loaded to dotenv!")
+
 const PORT = process.env.PORT || 3000
 const pass = process.env.KEY
 const server = createServer(requestHandler)
 const uri = `mongodb+srv://Node:${pass}@cluster0-ttfss.mongodb.net/online-chat?retryWrites=true&w=majority`
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+
+console.log("modules loaded full!")
 
 async function requestHandler(req, resp) {
   const cookies = new Cookies(req, resp)
@@ -131,10 +135,12 @@ async function requestHandler(req, resp) {
       const match = path.match(/\.(\w+)$/), ext = match ? match[1] : 'html'
 
       if (path.endsWith("/public/index.html")) {
+        console.log("index start!")
         const [file] = await Promise.all([fsp.readFile(path)])
         const html = buildFile("Главная", file.toString(), "reg")
         resp.setHeader('Content-Type', 'text/html')
         resp.end(await checkCandidate(cookies) ? `<script>location.href = '/chat'</script>` : html)
+        console.log("index end!")
       } else {
         fs.createReadStream(path).pipe(resp)
         resp.setHeader('Content-Type', {

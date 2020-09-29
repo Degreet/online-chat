@@ -2,18 +2,13 @@
   "name": "online-chat",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "debug.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index"
+    "start": "node debug.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "cookies": "^0.8.0",
-    "dotenv": "^8.2.0",
-    "gmail-send": "^1.8.10",
-    "mongodb": "^3.6.2"
-  }
+  "dependencies": {}
 }
