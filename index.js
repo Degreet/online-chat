@@ -1,8 +1,7 @@
 const { MongoClient, ObjectId } = require("mongodb")
 const { createServer } = require('http')
-const gmailMsg = require("gmail-send")
+// const gmailMsg = require("gmail-send")
 const fs = require('fs'), fsp = fs.promises
-const bcrypt = require('bcrypt')
 const Cookies = require('cookies')
 const dotenv = require('dotenv')
 dotenv.config()
