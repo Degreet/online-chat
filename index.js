@@ -244,6 +244,7 @@ function genDate() {
   return new Date().toISOString().slice(0, 19).replace("T", " ")
 }
 
+console.log("almost end!")
 client.connect(err => {
   if (err) console.log(err)
 
@@ -253,3 +254,5 @@ client.connect(err => {
   server.listen(PORT, () => console.log('Server started at http://localhost:3000'))
   setTimeout(() => client.close(), 1e9)
 })
+
+console.log("end!")
