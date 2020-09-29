@@ -6,18 +6,16 @@ const Cookies = require('cookies')
 const dotenv = require('dotenv')
 dotenv.config()
 
-console.log("modules loaded to dotenv!")
-
 const PORT = process.env.PORT || 3000
 const pass = process.env.KEY
 const server = createServer(requestHandler)
 const uri = `mongodb+srv://Node:${pass}@cluster0-ttfss.mongodb.net/online-chat?retryWrites=true&w=majority`
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 
-console.log("modules loaded full!")
-
 async function requestHandler(req, resp) {
+  console.log(req.url)
   const cookies = new Cookies(req, resp)
+  console.log("cookies loaded!")
 
   let { url } = req
   if (url.startsWith('/api/')) {
@@ -135,12 +133,12 @@ async function requestHandler(req, resp) {
       const match = path.match(/\.(\w+)$/), ext = match ? match[1] : 'html'
 
       if (path.endsWith("/public/index.html")) {
-        console.log("index start!")
+        console.log("index starting")
         const [file] = await Promise.all([fsp.readFile(path)])
         const html = buildFile("Главная", file.toString(), "reg")
         resp.setHeader('Content-Type', 'text/html')
         resp.end(await checkCandidate(cookies) ? `<script>location.href = '/chat'</script>` : html)
-        console.log("index end!")
+        console.log("index end")
       } else {
         fs.createReadStream(path).pipe(resp)
         resp.setHeader('Content-Type', {
@@ -244,7 +242,6 @@ function genDate() {
   return new Date().toISOString().slice(0, 19).replace("T", " ")
 }
 
-console.log("almost end!")
 client.connect(err => {
   if (err) console.log(err)
 
@@ -254,5 +251,3 @@ client.connect(err => {
   server.listen(PORT, () => console.log('Server started at http://localhost:3000'))
   setTimeout(() => client.close(), 1e9)
 })
-
-console.log("end!")
